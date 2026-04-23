@@ -1,0 +1,95 @@
+#!/usr/bin/bash
+
+export DISPLAY="${DISPLAY:-:0}"
+
+#Original script from bread on penguins
+colorPicker(){
+    local magic_com=$(command -v magick || command -v convert)
+    local tmp=$(mktemp --suffix=.png); trap 'rm -f "$TMP"' EXIT
+
+    for cmd in import "$magic_com" xclip notify-send; do
+        command -v "$cmd" &>/dev/null || { echo "Missing: $cmd" >&2; exit 1; };
+    done
+
+    if command -v slop &>/dev/null; then
+        import -window root -crop "$(slop --tolerance=0 || exit 1)" "$tmp"
+    else
+        import "$tmp"
+    fi
+
+    hex=$("$magic_com" "$tmp" -scale 1x1\! -format "#%[hex:p{0,0}]" info: 2>/dev/null || echo "#??????")
+    echo "$hex" | xclip -selection clipboard -i && notify-send -i "$tmp" "Color: $hex"
+}
+
+screenshot(){
+    maim -f png "$1" | xclip -selection clipboard -t image/png
+}
+
+#This can act as a box or specific window screenshot
+selectshot(){
+    maim -f png -s "$1" | xclip -selection clipboard -t image/png
+}
+
+getName(){
+    prompt="Enter the screenshot name:"
+    name=$(echo -e "" | dmenu -p "$prompt")
+    if [[ -z "$name" ]]; then
+        exit 0
+    fi
+
+    getShotType "$name"
+}
+
+getShotType(){
+    for cmd in maim xclip notify-send; do
+        command -v "$cmd" &>/dev/null || { echo "Missing: $cmd" >&2; exit 1; };
+    done
+
+
+    local file=""
+    if [[ $# -eq 0 ]]; then
+        file="Screenshot-$(date +%Y_%m_%d-%T).png"
+    else
+        if [[ "$1" != *".png" ]]; then
+            file="$1.png"
+        else
+            file="$1"
+        fi
+    fi
+
+    local temp="/tmp/$file"
+    selection=$(echo -e "Screen\nSelect" | dmenu -p "What screen shot do you want?")
+    case "$selection" in
+        Screen)
+            screenshot "$temp"
+            ;;
+        Select)
+            selectshot "$temp"
+            ;;
+        *)
+            exit 0
+            ;;
+    esac
+
+    if [[ -f "$temp" ]]; then
+        notify-send -i "$temp" "Screen shot $file taken"
+        confirmation=$(echo -e "No\nYes" | dmenu -i -p "Save screen shot?")
+        if [[ "$confirmation" == "Yes" ]]; then
+            cp "$temp" ~/Pictures/Screenshots/"$file" && notify-send "Saved Screen shot" || notify-send -u critical "FAILED TO SAVE"
+        fi
+    fi
+}
+
+main(){
+    if [[ ! -d ~/Pictures/Screenshots/ ]]; then
+        mkdir -p ~/Pictures/Screenshots/
+    fi
+
+    case "${1:-}" in
+        -c|--color) colorPicker ;;
+        -n|--name) getName ;;
+        *) getShotType ;;
+    esac
+}
+
+main "$@"

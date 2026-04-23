@@ -36,7 +36,7 @@ export VISUAL=nvim
 shopt -s checkwinsize
 
 # Allow ctrl-S for history navigation (with ctrl-R)
-[[ $- == *i* ]] && stty -ixon
+#[[ $- == *i* ]] && stty -ixon
 
 # Ignore case on auto-completion
 # Note: bind used instead of sticking these in .inputrc
@@ -97,6 +97,7 @@ alias vids='cd ~/Videos/'
 alias pics='cd ~/Pictures/'
 alias root='cd /'
 alias rice='cd ~/.config/suckless/'
+alias lbin='cd ~/.local/bin'
 alias ..='cd ..'
 alias cd2='cd ../..'
 

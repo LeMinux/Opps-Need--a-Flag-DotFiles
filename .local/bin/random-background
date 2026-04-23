@@ -12,4 +12,4 @@ random_background=( "${background_array[RANDOM%${#background_array[@]}]}" )
 #array_length = ${#array[@]}
 #RANDOM being an environment variable from 0 - 32767 which should be sufficient
 
-feh --bg-scale "$random_background"
+/usr/bin/feh --bg-scale "$random_background"

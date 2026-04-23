@@ -3,3 +3,5 @@
 /usr/bin/nm-applet --indicator &
 ~/.local/bin/random-background &
 ~/.local/bin/random-sound ~/.local/share/sounds/start-up &
+xset s 600 &
+/usr/bin/xss-lock -- /usr/bin/cinnamon-screensaver --lock &

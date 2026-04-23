@@ -26,26 +26,30 @@ menu() {
             prompt="Choose how to QUICKLY exit:"
         fi
 
-        selection=$(echo -e "Suspend\nKill DWM\nLog out\nReboot\nShutdown\nTOGGLE QUICK" | dmenu -p "$prompt")
+        selection=$(echo -e "Lock\nSuspend\nKill DWM\nLog out\nReboot\nShutdown\nTOGGLE QUICK" | dmenu -p "$prompt")
         case "$selection" in
+            Lock)
+                execute_action "/usr/bin/cinnamon-screensaver-command --lock" 1
+                still_picking=false
+                ;;
             Suspend)
-                execute_action "systemctl suspend" "$quick_flag"
+                execute_action "/usr/bin/systemctl suspend" "$quick_flag"
                 still_picking=false
                 ;;
             Kill\ DWM)
-                execute_action "pkill dwm" "$quick_flag"
+                execute_action "/usr/bin/pkill dwm" "$quick_flag"
                 still_picking=false
                 ;;
             Log\ out)
-                execute_action "loginctl terminate-session $(loginctl session-status | head -n 1 | awk '{print $1}')" "$quick_flag"
+                execute_action "/usr/bin/loginctl terminate-session $(loginctl session-status | head -n 1 | awk '{print $1}')" "$quick_flag"
                 still_picking=false
                 ;;
             Reboot)
-                execute_action "systemctl reboot" "$quick_flag"
+                execute_action "/usr/bin/systemctl reboot" "$quick_flag"
                 still_picking=false
                 ;;
             Shutdown)
-                execute_action "systemctl poweroff" "$quick_flag"
+                execute_action "/usr/bin/systemctl poweroff" "$quick_flag"
                 still_picking=false
                 ;;
             TOGGLE\ QUICK)
