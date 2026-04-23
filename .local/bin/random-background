@@ -1,0 +1,15 @@
+#!/bin/bash
+
+#I could do find <location> -type f | shuf -n 1, but supposedly this implementation is better
+#https://stackoverflow.com/questions/414164/how-can-i-select-random-files-from-a-directory-in-bash
+
+#for when used in a cronjob
+export DISPLAY=:0.0
+
+background_array=(~/Pictures/DeskTopWallpaper/*)
+random_background=( "${background_array[RANDOM%${#background_array[@]}]}" )
+#This turns into array[RANDOM mod array_length]
+#array_length = ${#array[@]}
+#RANDOM being an environment variable from 0 - 32767 which should be sufficient
+
+feh --bg-scale "$random_background"

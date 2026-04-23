@@ -1,0 +1,62 @@
+#!/bin/bash
+
+execute_action() {
+    local command="$1"
+    local is_quick="$2"
+
+    #in case audio breaks a quick option is provided to not play sound
+    if [[ "$is_quick" -eq 0 ]]; then
+        ~/.local/bin/random-sound ~/.local/share/sounds/leave-down
+    fi
+    eval "$command"
+}
+
+# Main menu function
+menu() {
+    local quick_flag=0
+    local still_picking=true
+    #still picking is set to false even after events where it doesn't matter
+    #in case it fails this way you are not stuck in dmenu
+    while "$still_picking" = true ; do
+        local prompt=""
+
+        if [[ "$quick_flag" -eq 0 ]]; then
+            prompt="Choose how to exit:"
+        else
+            prompt="Choose how to QUICKLY exit:"
+        fi
+
+        selection=$(echo -e "Suspend\nKill DWM\nLog out\nReboot\nShutdown\nTOGGLE QUICK" | dmenu -p "$prompt")
+        case "$selection" in
+            Suspend)
+                execute_action "systemctl suspend" "$quick_flag"
+                still_picking=false
+                ;;
+            Kill\ DWM)
+                execute_action "pkill dwm" "$quick_flag"
+                still_picking=false
+                ;;
+            Log\ out)
+                execute_action "loginctl terminate-session $(loginctl session-status | head -n 1 | awk '{print $1}')" "$quick_flag"
+                still_picking=false
+                ;;
+            Reboot)
+                execute_action "systemctl reboot" "$quick_flag"
+                still_picking=false
+                ;;
+            Shutdown)
+                execute_action "systemctl poweroff" "$quick_flag"
+                still_picking=false
+                ;;
+            TOGGLE\ QUICK)
+                quick_flag=$(( ($quick_flag + 1) % 2 ))
+                ;;
+            *)
+                #handle ESC key
+                still_picking=false
+                ;;
+        esac
+    done
+}
+
+menu

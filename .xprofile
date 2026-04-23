@@ -1,0 +1,5 @@
+/usr/local/bin/dwmblocks &
+/usr/bin/dunst &
+/usr/bin/nm-applet --indicator &
+~/.local/bin/random-background &
+~/.local/bin/random-sound ~/.local/share/sounds/start-up &

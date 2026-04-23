@@ -1,0 +1,16 @@
+#!/bin/bash
+
+if [[ $# -eq 0 ]]; then
+    echo "Need to provide dir for where to get sounds"
+    exit 1
+fi
+
+if [[ ! -d "$1" ]]; then
+    echo "Arugment $1 for sounds does not exist"
+    exit 1
+fi
+
+sound_array=("$1"/*)
+random_file=( "${sound_array[RANDOM%${#sound_array[@]}]}" )
+
+play "$random_file"
