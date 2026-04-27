@@ -3,7 +3,8 @@
 /usr/bin/dunst &
 /usr/bin/nm-applet --indicator &
 #notify in 8 minutes 2 minutes after lock
-xset s 480 120 &
+#xset s 480 120 &
 #/usr/bin/xss-lock -n 'notify-send -u normal "Locking soon"' -- /usr/bin/cinnamon-screensaver-command --lock &
+xset s 600 &
 /usr/bin/xss-lock -- ~/.local/bin/lockout &
 ~/.local/bin/random-sound ~/.local/share/sounds/start-up &
