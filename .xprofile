@@ -1,7 +1,9 @@
 /usr/local/bin/dwmblocks &
+~/.local/bin/random-background &
 /usr/bin/dunst &
 /usr/bin/nm-applet --indicator &
-~/.local/bin/random-background &
+#notify in 8 minutes 2 minutes after lock
+xset s 480 120 &
+#/usr/bin/xss-lock -n 'notify-send -u normal "Locking soon"' -- /usr/bin/cinnamon-screensaver-command --lock &
+/usr/bin/xss-lock -- ~/.local/bin/lockout &
 ~/.local/bin/random-sound ~/.local/share/sounds/start-up &
-xset s 600 &
-/usr/bin/xss-lock -- /usr/bin/cinnamon-screensaver --lock &
