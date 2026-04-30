@@ -1,6 +1,7 @@
 /usr/local/bin/dwmblocks &
 ~/.local/bin/random-background &
 /usr/bin/dunst &
+/usr/bin/pasystray &
 /usr/bin/nm-applet --indicator &
 #notify in 8 minutes 2 minutes after lock
 #xset s 480 120 &
