@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Hello User
+Comment=Play a random sound on user login
+Exec=/bin/sh -c "~/.local/bin/random-sound ~/.local/share/sounds/start-up"
+Type=Application
+Keywords=sound;start up;
+Terminal=false
+X-GNOME-Autostart-enabled=true

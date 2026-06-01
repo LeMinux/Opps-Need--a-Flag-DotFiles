@@ -1,0 +1,8 @@
+/usr/local/bin/dwmblocks &
+~/.local/bin/random-background &
+/usr/bin/dunst &
+/usr/bin/pasystray &
+/usr/bin/nm-applet --indicator &
+xset s 600 &
+/usr/bin/xss-lock -- ~/.local/bin/lockout &
+sleep 1 && ~/.local/bin/random-sound ~/.local/share/sounds/start-up &

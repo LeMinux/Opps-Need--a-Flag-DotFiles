@@ -1,0 +1,2 @@
+~/.local/bin/random-background &
+~/.local/bin/random-sound ~/.local/share/sounds/start-up &
