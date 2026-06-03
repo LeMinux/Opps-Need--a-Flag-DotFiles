@@ -9,6 +9,7 @@ Hence, why there are two .xprofiles.
 However, the .xprofile can act a bit strange with cinnamon's startup, so a .desktop is provided which has a slightly better startup.
 Notably, the random background can be strange if you already have it set to randomize a background through the settings.
 If you still want to use the .xprofile you can either create a link to one of the .xprofiles\_\[dwm, cinnamon\], or copy and paste into newly created .xprofile.
+Do not use both the .xprofile and the .desktop at the same time though.
 
 ```
 #link
