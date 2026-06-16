@@ -143,7 +143,7 @@ up() {
 
 #plays a sound when the terminal exits
 #doesn't always activate in quick sucession
-#You'll want the sounds to be less than a second, and proably no more than 40
+#You'll want the sounds to be less than a second, and proably no more than 40 sounds
 trap "~/.local/bin/random-sound ~/.local/share/sounds/term-exit/ &" EXIT
 
 eval "$(starship init bash)"
