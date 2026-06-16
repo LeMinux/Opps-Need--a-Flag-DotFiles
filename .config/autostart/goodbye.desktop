@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Goodbye user
+Comment=Play a random sound on shutdown
+Exec=/bin/sh -c "~/.local/bin/shutdown-listen"
+Type=Application
+Keywords=sound;shutdown;
+Terminal=false
+X-GNOME-Autostart-enabled=true

@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+systemd-inhibit \
+--what=shutdown \
+--who="shutdown sound" \
+--why="Delay long enough for exit sound" \
+--mode delay \
+dbus-monitor \
+--system \
+"type='signal',interface='org.freedesktop.login1.Manager',member='PrepareForShutdown'" \
+    | \
+    while read -r line; do
+        if [[ "$line" =~ "Shutdown" ]]; then
+            ~/.local/bin/random-sound ~/.local/share/sounds/leave-down
+            exit 0
+        fi
+    done
